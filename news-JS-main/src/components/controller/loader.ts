@@ -2,7 +2,11 @@ interface IOptions {
   [key: string]: string;
 }
 
-type IEmptyCallback = (data?: object) => void;
+export interface IData {
+  [key: string]: string | number;
+}
+
+export type Callback = (data?: IData) => void;
 
 class Loader {
   baseLink: string;
@@ -14,7 +18,7 @@ class Loader {
 
   getResp(
     { endpoint, options = {} }: { endpoint: string; options?: IOptions | {} },
-    callback: IEmptyCallback = () => {
+    callback: Callback = () => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -42,11 +46,11 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method: string, endpoint: string, callback: IEmptyCallback, options: IOptions | {}) {
+  load(method: string, endpoint: string, callback: Callback, options: IOptions | {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res) => res.json() as object)
-      .then((data) => callback(data))
+      .then((res) => res.json())
+      .then((data: IData) => callback(data))
       .catch((err: PromiseRejectedResult) => console.error(err));
   }
 }

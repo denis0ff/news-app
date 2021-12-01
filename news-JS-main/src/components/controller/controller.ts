@@ -1,9 +1,9 @@
 import AppLoader from './appLoader';
 
-type IEmptyCallback = (data?: object) => void;
+import { Callback } from './loader';
 
 class AppController extends AppLoader {
-  getSources(callback: IEmptyCallback) {
+  getSources(callback: Callback) {
     super.getResp(
       {
         endpoint: 'sources',
@@ -12,7 +12,7 @@ class AppController extends AppLoader {
     );
   }
 
-  getNews(e: Event, callback: IEmptyCallback) {
+  getNews(e: Event, callback: Callback) {
     let target = <HTMLElement>e.target;
     const newsContainer = <HTMLElement>e.currentTarget;
 
