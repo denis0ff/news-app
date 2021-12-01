@@ -2,6 +2,8 @@ interface IOptions {
   [key: string]: string;
 }
 
+type IEmptyCallback = (data?: object) => void;
+
 class Loader {
   baseLink: string;
   options: IOptions;
@@ -12,7 +14,7 @@ class Loader {
 
   getResp(
     { endpoint, options = {} }: { endpoint: string; options?: IOptions | {} },
-    callback = (): void => {
+    callback: IEmptyCallback = () => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -40,7 +42,7 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method: string, endpoint: string, callback: (data?: object) => void, options: IOptions | {}) {
+  load(method: string, endpoint: string, callback: IEmptyCallback, options: IOptions | {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json() as object)
