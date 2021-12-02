@@ -1,6 +1,6 @@
 import './sources.css';
 
-import { ISources } from '../../controller/loader';
+import { ISources } from '../../utils/utils';
 
 class Sources {
   draw(data: Array<ISources>) {

@@ -1,42 +1,4 @@
-interface IOptions {
-  [key: string]: string;
-}
-
-export interface ISources {
-  name: string;
-  id: string;
-}
-
-export interface IArticles {
-  author: string;
-  description: string;
-  publishedAt: string;
-  source: { id: string; name: string };
-  title: string;
-  url: string;
-  urlToImage: string;
-}
-
-interface IData {
-  status?: 'string';
-}
-
-interface IDataArticles extends IData {
-  type: 'articles';
-  articles?: Array<IArticles>;
-  sources?: undefined;
-  totalResults?: number;
-}
-
-interface IDataSources extends IData {
-  type: 'sources';
-  sources?: Array<ISources>;
-  articles?: undefined;
-}
-
-export type Data = IDataArticles | IDataSources;
-
-export type Callback = (data?: Data) => void;
+import { Data, IOptions, Callback } from '../utils/utils';
 
 class Loader {
   baseLink: string;
