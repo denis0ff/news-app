@@ -23,19 +23,19 @@ interface IData {
 
 interface IDataArticles extends IData {
   type: 'articles';
-  articles?: Array<IArticles>;
+  articles?: IArticles[];
   sources?: undefined;
   totalResults?: number;
 }
 
 interface IDataSources extends IData {
   type: 'sources';
-  sources?: Array<ISources>;
+  sources?: ISources[];
   articles?: undefined;
 }
 
 type Data = IDataArticles | IDataSources;
 
-type Callback = (data?: Data) => void;
+type Callback<T> = (data: T) => void;
 
 export { Data, Callback, ISources, IArticles, IOptions };

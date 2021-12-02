@@ -1,6 +1,8 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 
+import { Data } from '../utils/utils';
+
 class App {
   controller: AppController;
   view: AppView;
@@ -10,10 +12,10 @@ class App {
   }
 
   start() {
-    document
-      .querySelector('.sources')!
-      .addEventListener('click', (e) => this.controller.getNews(e, (data) => this.view.drawNews(data)));
-    this.controller.getSources((data) => this.view.drawSources(data));
+    (document.querySelector('.sources') as HTMLElement).addEventListener('click', (e) =>
+      this.controller.getNews(e, (data: Data) => this.view.drawNews(data))
+    );
+    this.controller.getSources((data: Data) => this.view.drawSources(data));
   }
 }
 

@@ -9,8 +9,8 @@ class Loader {
   }
 
   getResp(
-    { endpoint, options = {} }: { endpoint: string; options?: IOptions | {} },
-    callback: Callback = (data) => {
+    { endpoint, options = {} }: { endpoint: string; options?: IOptions },
+    callback: Callback<Data> = () => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -27,7 +27,7 @@ class Loader {
     return res;
   }
 
-  makeUrl(options: IOptions | {}, endpoint: string): string {
+  makeUrl(options: IOptions, endpoint: string): string {
     const urlOptions = { ...this.options, ...options };
     let url = `${this.baseLink}${endpoint}?`;
 
@@ -38,10 +38,10 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method: string, endpoint: string, callback: Callback, options: IOptions | {}) {
+  load(method: string, endpoint: string, callback: Callback<Data>, options: IOptions) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res) => res.json())
+      .then((res) => res.json() as Promise<Data>)
       .then((data: Data) => callback(data))
       .catch((err: PromiseRejectedResult) => console.error(err));
   }
