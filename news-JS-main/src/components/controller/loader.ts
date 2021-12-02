@@ -2,11 +2,41 @@ interface IOptions {
   [key: string]: string;
 }
 
-export interface IData {
-  [key: string]: string | number;
+export interface ISources {
+  name: string;
+  id: string;
 }
 
-export type Callback = (data?: IData) => void;
+export interface IArticles {
+  author: string;
+  description: string;
+  publishedAt: string;
+  source: { id: string; name: string };
+  title: string;
+  url: string;
+  urlToImage: string;
+}
+
+interface IData {
+  status?: 'string';
+}
+
+interface IDataArticles extends IData {
+  type: 'articles';
+  articles?: Array<IArticles>;
+  sources?: undefined;
+  totalResults?: number;
+}
+
+interface IDataSources extends IData {
+  type: 'sources';
+  sources?: Array<ISources>;
+  articles?: undefined;
+}
+
+export type Data = IDataArticles | IDataSources;
+
+export type Callback = (data?: Data) => void;
 
 class Loader {
   baseLink: string;
@@ -18,7 +48,7 @@ class Loader {
 
   getResp(
     { endpoint, options = {} }: { endpoint: string; options?: IOptions | {} },
-    callback: Callback = () => {
+    callback: Callback = (data) => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -50,7 +80,7 @@ class Loader {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json())
-      .then((data: IData) => callback(data))
+      .then((data: Data) => callback(data))
       .catch((err: PromiseRejectedResult) => console.error(err));
   }
 }
