@@ -38,4 +38,6 @@ type Data = IDataArticles | IDataSources;
 
 type Callback<T> = (data: T) => void;
 
-export { Data, Callback, ISources, IArticles, IOptions };
+export {
+  Data, Callback, ISources, IArticles, IOptions,
+};

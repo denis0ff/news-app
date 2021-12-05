@@ -25,7 +25,7 @@ module.exports = ({ development }) => ({
     main: './src/index.ts',
   },
   output: {
-    filename: '[name].[contenthash].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/[hash][ext]',
   },
@@ -56,7 +56,7 @@ module.exports = ({ development }) => ({
   },
   plugins: [
     ...esLintPlugin(development),
-    new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+    new MiniCssExtractPlugin({ filename: 'index.css' }),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CopyPlugin({
       patterns: [

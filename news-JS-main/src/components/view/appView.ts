@@ -5,7 +5,9 @@ import { Data, IArticles, ISources } from '../utils/utils';
 
 export class AppView {
   news: News;
+
   sources: Sources;
+
   constructor() {
     this.news = new News();
     this.sources = new Sources();

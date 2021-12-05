@@ -2,7 +2,9 @@ import { Data, IOptions, Callback } from '../utils/utils';
 
 class Loader {
   baseLink: string;
+
   options: IOptions;
+
   constructor(baseLink: string, options: IOptions) {
     this.baseLink = baseLink;
     this.options = options;
@@ -12,15 +14,16 @@ class Loader {
     { endpoint, options = {} }: { endpoint: string; options?: IOptions },
     callback: Callback<Data> = () => {
       console.error('No callback for GET response');
-    }
+    },
   ): void {
     this.load('GET', endpoint, callback, options);
   }
 
   errorHandler(res: Response) {
     if (!res.ok) {
-      if (res.status === 401 || res.status === 404)
+      if (res.status === 401 || res.status === 404) {
         console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+      }
       throw Error(res.statusText);
     }
 
