@@ -1,9 +1,11 @@
-import { Data, IOptions, Callback } from '../utils/utils';
+import {
+  Data, IOptions, Callback, ILoaderParams,
+} from '../utils/utils';
 
 class Loader {
-  baseLink: string;
+  readonly baseLink: string;
 
-  options: IOptions;
+  readonly options: IOptions;
 
   constructor(baseLink: string, options: IOptions) {
     this.baseLink = baseLink;
@@ -11,7 +13,7 @@ class Loader {
   }
 
   getResp(
-    { endpoint, options = {} }: { endpoint: string; options?: IOptions },
+    { endpoint, options = {} }: ILoaderParams,
     callback: Callback<Data> = () => {
       console.error('No callback for GET response');
     },
@@ -19,7 +21,7 @@ class Loader {
     this.load('GET', endpoint, callback, options);
   }
 
-  errorHandler(res: Response) {
+  errorHandler(res: Response): Response {
     if (!res.ok) {
       if (res.status === 401 || res.status === 404) {
         console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
@@ -41,7 +43,7 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method: string, endpoint: string, callback: Callback<Data>, options: IOptions) {
+  load(method: string, endpoint: string, callback: Callback<Data>, options: IOptions): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json() as Promise<Data>)

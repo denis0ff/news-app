@@ -1,37 +1,42 @@
 interface IOptions {
-  [key: string]: string;
+  readonly [key: string]: string;
+}
+
+interface ILoaderParams {
+  endpoint: string;
+  options?: IOptions;
 }
 
 interface ISources {
-  name: string;
-  id: string;
+  readonly name: string;
+  readonly id: string;
 }
 
 interface IArticles {
-  author: string;
-  description: string;
-  publishedAt: string;
-  source: { id: string; name: string };
-  title: string;
-  url: string;
-  urlToImage: string;
+  readonly author: string;
+  readonly description: string;
+  readonly publishedAt: string;
+  readonly source: { readonly id: string; readonly name: string };
+  readonly title: string;
+  readonly url: string;
+  readonly urlToImage: string;
 }
 
 interface IData {
-  status?: 'string';
+  readonly status?: 'string';
 }
 
 interface IDataArticles extends IData {
-  type: 'articles';
-  articles?: IArticles[];
-  sources?: undefined;
-  totalResults?: number;
+  readonly type: 'articles';
+  readonly articles?: IArticles[];
+  readonly sources?: undefined;
+  readonly totalResults?: number;
 }
 
 interface IDataSources extends IData {
-  type: 'sources';
-  sources?: ISources[];
-  articles?: undefined;
+  readonly type: 'sources';
+  readonly sources?: ISources[];
+  readonly articles?: undefined;
 }
 
 type Data = IDataArticles | IDataSources;
@@ -39,5 +44,5 @@ type Data = IDataArticles | IDataSources;
 type Callback<T> = (data: T) => void;
 
 export {
-  Data, Callback, ISources, IArticles, IOptions,
+  Data, Callback, ISources, IArticles, IOptions, ILoaderParams,
 };
